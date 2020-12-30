@@ -5,19 +5,19 @@ function GameBoard(props) {
     return (
         <div className='container'>
             <div className='board'>
-                {props.board.map( (row,index) => {
+                {props.chess.board().map( (row,index) => {
                     return(
                         <Row
                             key={index}
                             arr={row}
                             handlePieceClick={props.handlePieceClick}
                             rowIndex={index}
+                            chess={props.chess}
+                            highlighted={props.highlighted}
                         />
                     )})
                 }
             </div>
-            <div className='clear' />
-            <MoveList board={props.board} moves={props.moves}/>
         </div>
     )
 }

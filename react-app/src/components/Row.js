@@ -12,6 +12,8 @@ function Row(props) {
                         index={index}
                         cell={cell}
                         handlePieceClick={props.handlePieceClick}
+                        chess={props.chess}
+                        highlighted={props.highlighted}
                     />
                 )
             })}
