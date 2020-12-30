@@ -7,31 +7,36 @@ import useEventListener from './useEventListener'
 
 function GameBoard() {
 
-    const [chess, setChess] = useState(new Chess('rnbQ3r/pppp1Pbp/3k2pn/8/8/6P1/PPPP3P/RNBQKBNR w KQ - 1 11'))
+    const [chess, setChess] = useState(new Chess())
+    const [answer, setAnswer] = useState([])
     const [highlighted, setHighlighted] = useState([0,[]])
     const [key, update] = useState(0)
     const [stockfish, setStockFish] = useState( new Worker('./stockfish.js'));
 
     useEffect(()=>{
-        fetch('http://localhost:4000/games')
-            .then(response=>response.json())
-            .then(({data})=>{
-                chess.load_pgn(data[0].moves)
-                console.log(data[0].moves)
-                setChess(chess)
-                update(key+1)
-                stockfish.postMessage('uci')
-            })
+
     },[])
 
     useEventListener('keydown', event=>{
-        if(event.keyCode === 37){
+        console.log(event.keyCode)
+        if(event.keyCode === 32){
+            fetch('http://localhost:4000/puzzles')
+                .then(response=>response.json())
+                .then(({data})=>{
+                    const fen = data[0].pos.replace('\"','').replace('\"','')
+                    if(!chess.load_pgn(fen)){chess.load(fen)} // If can't load by pgn, load by fen
+                    console.log(data[0].solution.split(' '))
+                    console.log(fen)
+                    setChess(chess)
+                    update(key+1)
+                    stockfish.postMessage('uci')
+                })
         }
         if(event.keyCode === 39){
         }
     })
     stockfish.onmessage = (e) => {
-        console.log(e.data)
+        // console.log(e.data)
         if(e.data==='uciok') {
             stockfish.postMessage('setoption name Hash value 32')
             stockfish.postMessage('isready')
@@ -40,11 +45,11 @@ function GameBoard() {
             stockfish.postMessage('ucinewgame')
             stockfish.postMessage('position fen '+ chess.fen())
             console.log('fen', chess.fen())
-            stockfish.postMessage('go wtime 122000 btime 120000 winc 2000 binc 2000')
+            stockfish.postMessage('go movetime 1000')// go wtime 60000 btime 60000 winc 2000 binc 2000
         }
         else if(e.data.indexOf('bestmove')>-1){
             console.log("FOUND BEST MOVE", e.data.slice(9,13))
-            chess.move(e.data.slice(9,13),{sloppy: true})
+            // chess.move(e.data.slice(9,13),{sloppy: true})
             setChess(chess)
             update(key+1)
         }
@@ -82,7 +87,7 @@ function GameBoard() {
                 console.log('game over!')
             }
             else {
-                stockfish.postMessage('uci')
+                // stockfish.postMessage('uci')
             }
         }
     }
