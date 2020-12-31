@@ -1,11 +1,11 @@
 import React from 'react'
-import GameLogic from './components/GameLogic'
+import GameBoard from './components/GameBoard'
 
 
 function App() {
   return (
     <div>
-        <GameLogic />
+        <GameBoard />
     </div>
   );
 }

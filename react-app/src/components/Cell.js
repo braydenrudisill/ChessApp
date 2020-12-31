@@ -36,15 +36,16 @@ function Cell(props) {
                 className={'gamePiece'}
                 src={piece && map[piece.type][piece.color]}
                 alt={piece && piece.color+piece.type}
-                onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
-                style={{visibility: piece ? 'visible':'hidden'}}
+                onMouseDown={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                style={{visibility: piece ? 'visible':'hidden' }}
+                draggable={false}
             />
             {props.highlighted[1].indexOf(cell_name)>-1 &&
              <img
                 className={'gamePiece'}
                 src={dot2}
                 alt={'dot'}
-                onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                onMouseUp={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
             />
             }
 
