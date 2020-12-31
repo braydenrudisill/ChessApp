@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import PromotionPopup from './PromotionPopup'
 import br from './icons/good-br2.png'
 import bn from './icons/good-bn.png'
@@ -19,6 +19,30 @@ import dot2 from './icons/dot2.png'
 function Cell(props) {
     let piece = props.chess.board()[props.rowIndex][props.index]
     let cell_name = 'abcdefgh'[props.index] + '87654321'[props.rowIndex]
+
+    let [isDragging, setIsDragging] = useState(false)
+    let [x,setX] = useState(0)
+    let [y,setY] = useState(0)
+    let [initX,setInitX] = useState(0)
+    let [initY,setInitY] = useState(0)
+
+    const handleMouseDown = ({ clientX, clientY }) => {
+        window.addEventListener('movemove', e=>console.log('hey'))
+        // window.addEventListener('mouseup', handleMouseUp)
+        setInitX(clientX)
+        setInitY(clientY)
+        setX(clientX)
+        setY(clientY)
+        setIsDragging(true)
+        console.log('click!',clientX,clientY)
+    }
+    const handleMouseMove = ({clientX, clientY}) => {
+        if (!isDragging) return
+        setX(clientX)
+        setY(clientY)
+        console.log(clientX,clientY)
+        console.log(clientX-initX,clientY-initY)
+    }
     // console.log(props.highlighted)
 
     let map = {
@@ -36,8 +60,13 @@ function Cell(props) {
                 className={'gamePiece'}
                 src={piece && map[piece.type][piece.color]}
                 alt={piece && piece.color+piece.type}
-                onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
-                style={{visibility: piece ? 'visible':'hidden'}}
+                style={{visibility: piece ? 'visible':'hidden', left: (x-initX)+'px',top: (y-initY)+'px', zIndex:1000}}
+                onMouseDown={e => {
+                    props.handlePieceClick(e,props.rowIndex,props.index)
+                    handleMouseDown(e)
+                }}
+                onMouseMove={handleMouseMove}
+                draggable={'false'}
             />
             {props.highlighted[1].indexOf(cell_name)>-1 &&
              <img
