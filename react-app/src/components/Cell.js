@@ -27,70 +27,34 @@ function Cell(props) {
         'b' : {'w' : wb, 'b' : bb},
         'q' : {'w' : wq, 'b' : bq},
         'k' : {'w' : wk, 'b' : bk},
-        'p' : {'w' : wp, 'b' : bp}
+        'p' : {'w' : wp, 'b' : bp},
     }
-    // console.log(props.highlighted[0])
-    if (piece && props.highlighted[1].length!=0 && props.highlighted[1].indexOf(cell_name)>-1){
-        // if(!piece.type) console.log(piece)
-        return(
-            <div className={'cell'}>
-                <div>
-                    {
-                    (props.chess.get(props.highlighted[0]) && props.chess.get(props.highlighted[0]).type==='p' && '07'.indexOf(props.rowIndex)>-1)&&
-                        <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index}/>}
-                        <img
-                            row-index={props.rowIndex}
-                            cell-index={props.index}
-                            className={'gamePiece'}
-                            src={map[piece.type][piece.color]}
-                            alt={piece.color+piece.type}
-                            onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
-                        />
-                </div>
-            </div>
-        )
-    }
-    else if(piece){
-        return(
-            <div className={'cell'}>
-                <div onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}>
-                    <img
-                        row-index={props.rowIndex}
-                        cell-index={props.index}
-                        className={'gamePiece'}
-                        src={map[piece.type][piece.color]}
-                        alt={piece.color+piece.type}
-                    />
-                </div>
-            </div>
-        )
-    }
-    else if(props.highlighted[1].length!=0 && props.highlighted[1].indexOf(cell_name)>-1){
-        return (
-            <div className={'cell'}>
-                <div>
-                    {
-                    (props.chess.get(props.highlighted[0]) && props.chess.get(props.highlighted[0]).type==='p' && '07'.indexOf(props.rowIndex)>-1)?
-                        <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index}/>:
-                        <img
-                            row-index={props.rowIndex}
-                            cell-index={props.index}
-                            className={'gamePiece'}
-                            src={dot2}
-                            alt={'dot'}
-                            onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
-                        />
-                    }
-                </div>
-            </div>
-        )
-    }
-    else {
-        return(
-            <div className={'cell'}>
-            </div>
-        )
-    }
+
+    return(
+        <div className={'cell'}>
+            <img
+                className={'gamePiece'}
+                src={piece && map[piece.type][piece.color]}
+                alt={piece && piece.color+piece.type}
+                onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                style={{visibility: piece ? 'visible':'hidden'}}
+            />
+            {props.highlighted[1].indexOf(cell_name)>-1 &&
+             <img
+                className={'gamePiece'}
+                src={dot2}
+                alt={'dot'}
+                onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+            />
+            }
+
+            {props.highlighted[0]!=0 &&
+             props.chess.get(props.highlighted[0]).type==='p' &&
+             '07'.indexOf(props.rowIndex)>-1 &&
+             props.highlighted[1].indexOf(cell_name)>-1 &&
+             <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index} className={'popups'}/>}
+        </div>
+    )
 }
 
 export default Cell

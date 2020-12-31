@@ -29,8 +29,13 @@
   height:50px;
   width:50px;
   display:inline-block;
-  border:0px solid #ddd;
+  border:none;
   margin:0px;
+  position:relative;
+}
+
+.cell .popups {
+    position:absolute;
 }
 
 
@@ -57,7 +62,8 @@
     height:50px;
     margin:0px 0 0 0px;
     cursor:pointer;
-    position:relative;
+    position:absolute;
+    border:none;
 }
 
 /* .cell-b .gamePiece {

@@ -31,10 +31,10 @@ function PromotionPopup(props) {
                     setVisible(!visible)
                     // console.log(visible)
                 }}>
-                    <img src={dot} style={{height:50}} />
+                    <img src={dot2} style={{height:50}} />
                 </div>
                 :
-                <div>
+                <div className='promotewindow'>
                     <img
                         src={bq}
                         style={{height:50}}

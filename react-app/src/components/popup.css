@@ -4,3 +4,7 @@
   border-radius: 20px;
   z-index: 100;
 }
+
+.inner .promotewindow {
+    background-color: white;
+}
