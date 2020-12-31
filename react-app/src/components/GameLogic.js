@@ -5,7 +5,7 @@ import GameBoard from './GameBoard'
 
 function GameLogic() {
 
-    const [chess, setChess] = useState(new Chess())
+    const [chess, setChess] = useState(new Chess('rnbQ3r/pppp1Pbp/3k2pn/8/8/6P1/PPPP3P/RNBQKBNR w KQ - 1 11'))
     const [highlighted, setHighlighted] = useState([0,[]])
     const [key, update] = useState(0)
 
@@ -30,6 +30,7 @@ function GameLogic() {
     },[])
 
     const handlePieceClick = (event, rowIndex, cellIndex) => {
+        console.log('clack')
         const square = 'abcdefgh'[cellIndex] + '87654321'[rowIndex]
         if(highlighted[1].indexOf(square)===-1 && chess.board()[rowIndex][cellIndex]!=null){
             const moves = chess.moves({square: square, verbose:true})
@@ -57,9 +58,22 @@ function GameLogic() {
         }
     }
 
+    const promote = (piece, rowIndex, cellIndex)=>{
+        console.log('uvu')
+        const square = 'abcdefgh'[cellIndex] + '87654321'[rowIndex]
+        chess.move(highlighted[0]+square+'='+piece, {sloppy:true})
+        setHighlighted([0,[]])
+        update(key+1)
+    }
+
 
     return (
-        <GameBoard chess={chess} handlePieceClick={handlePieceClick} highlighted={highlighted}/>
+        <GameBoard
+            chess={chess}
+            handlePieceClick={handlePieceClick}
+            highlighted={highlighted}
+            promote={promote}
+        />
     )
 }
 

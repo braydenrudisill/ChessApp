@@ -1,4 +1,5 @@
 import React from 'react'
+import PromotionPopup from './PromotionPopup'
 import br from './icons/good-br2.png'
 import bn from './icons/good-bn.png'
 import bb from './icons/good-bb.png'
@@ -28,9 +29,28 @@ function Cell(props) {
         'k' : {'w' : wk, 'b' : bk},
         'p' : {'w' : wp, 'b' : bp}
     }
-    // console.log(props.chess.board())
-
-    if(piece){
+    // console.log(props.highlighted[0])
+    if (piece && props.highlighted[1].length!=0 && props.highlighted[1].indexOf(cell_name)>-1){
+        // if(!piece.type) console.log(piece)
+        return(
+            <div className={'cell'}>
+                <div>
+                    {
+                    (props.chess.get(props.highlighted[0]) && props.chess.get(props.highlighted[0]).type==='p' && '07'.indexOf(props.rowIndex)>-1)&&
+                        <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index}/>}
+                        <img
+                            row-index={props.rowIndex}
+                            cell-index={props.index}
+                            className={'gamePiece'}
+                            src={map[piece.type][piece.color]}
+                            alt={piece.color+piece.type}
+                            onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                        />
+                </div>
+            </div>
+        )
+    }
+    else if(piece){
         return(
             <div className={'cell'}>
                 <div onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}>
@@ -39,7 +59,6 @@ function Cell(props) {
                         cell-index={props.index}
                         className={'gamePiece'}
                         src={map[piece.type][piece.color]}
-                        style={{visibility: props.cell===''?'hidden':'visible'}}
                         alt={piece.color+piece.type}
                     />
                 </div>
@@ -49,14 +68,19 @@ function Cell(props) {
     else if(props.highlighted[1].length!=0 && props.highlighted[1].indexOf(cell_name)>-1){
         return (
             <div className={'cell'}>
-                <div onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}>
-                    <img
-                        row-index={props.rowIndex}
-                        cell-index={props.index}
-                        className={'gamePiece'}
-                        src={dot2}
-                        alt={'highlighted'}
-                    />
+                <div>
+                    {
+                    (props.chess.get(props.highlighted[0]) && props.chess.get(props.highlighted[0]).type==='p' && '07'.indexOf(props.rowIndex)>-1)?
+                        <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index}/>:
+                        <img
+                            row-index={props.rowIndex}
+                            cell-index={props.index}
+                            className={'gamePiece'}
+                            src={dot2}
+                            alt={'dot'}
+                            onClick={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                        />
+                    }
                 </div>
             </div>
         )

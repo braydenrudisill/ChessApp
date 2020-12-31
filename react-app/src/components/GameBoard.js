@@ -14,6 +14,7 @@ function GameBoard(props) {
                             rowIndex={index}
                             chess={props.chess}
                             highlighted={props.highlighted}
+                            promote={props.promote}
                         />
                     )})
                 }

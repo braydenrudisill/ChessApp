@@ -1,0 +1,6 @@
+.inner {
+  position: absolute;
+  margin: auto;
+  border-radius: 20px;
+  z-index: 100;
+}

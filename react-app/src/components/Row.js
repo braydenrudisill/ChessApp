@@ -14,6 +14,7 @@ function Row(props) {
                         handlePieceClick={props.handlePieceClick}
                         chess={props.chess}
                         highlighted={props.highlighted}
+                        promote={props.promote}
                     />
                 )
             })}
