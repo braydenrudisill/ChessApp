@@ -27,7 +27,7 @@ function PromotionPopup(props) {
         <div className='inner'>
             {
                 !visible?
-                <div onClick={()=>{
+                <div onMouseUp={()=>{
                     setVisible(!visible)
                     // console.log(visible)
                 }}>

@@ -4,7 +4,7 @@ import GameBoard from './components/GameBoard'
 
 function App() {
   return (
-    <div>
+    <div className='GameWindow'>
         <GameBoard />
     </div>
   );

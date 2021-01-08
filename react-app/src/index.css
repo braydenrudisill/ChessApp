@@ -39,24 +39,6 @@
 }
 
 
-.cell-h .gamePiece {
-
-}
-.cell.cell-a .gamePiece {
-    background-color: #7892bf;
-    /* box-shadow: 0px 0px 24px #2983f3; */
-}
-.cell.after {
-  content: ' ';
-  position: absolute;
-  right: 0;
-  top: -5px;
-  height: 38px;
-  width: 38px;
-  border-radius: 40px;
-  pointer-events:none;
-}
-
 .cell .gamePiece {
     width:50px;
     height:50px;
@@ -66,34 +48,11 @@
     border:none;
 }
 
-/* .cell-b .gamePiece {
-    background-color:rgb(78,78,78);
-} */
-
-/* .cell-w .gamePiece {
-    background-color:rgb(200,200,200);
-} */
-
-.cell-n .gamePiece {
-    background-image: url('https://icon-library.net/images/knight-chess-icon/knight-chess-icon-0.jpg');
-}
-
-.board.r .cell-b .gamePiece {
-  opacity:0.7;
-}
-.board.b .cell-r .gamePiece {
-  opacity:0.7;
-}
-
 .board {
   float:left;
   transition-duration: 0.8s;
   transition-property: transform;
 }
-/*.board.b {
-   transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-}*/
 
 button {
   display:block;

@@ -40,20 +40,22 @@ function Cell(props) {
                 style={{visibility: piece ? 'visible':'hidden' }}
                 draggable={false}
             />
-            {props.highlighted[1].indexOf(cell_name)>-1 &&
-             <img
-                className={'gamePiece'}
-                src={dot2}
-                alt={'dot'}
-                onMouseUp={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
-            />
-            }
 
-            {props.highlighted[0]!=0 &&
-             props.chess.get(props.highlighted[0]).type==='p' &&
-             '07'.indexOf(props.rowIndex)>-1 &&
-             props.highlighted[1].indexOf(cell_name)>-1 &&
-             <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index} className={'popups'}/>}
+            {
+                (props.highlighted[0]!=0 &&
+                props.chess.get(props.highlighted[0]).type==='p' &&
+                '07'.indexOf(props.rowIndex)>-1 &&
+                props.highlighted[1].indexOf(cell_name)>-1) ?
+                    <PromotionPopup promote={props.promote} ri={props.rowIndex} ci={props.index} className={'popups'}/>
+                :
+                    props.highlighted[1].indexOf(cell_name)>-1 &&
+                     <img
+                        className={'gamePiece'}
+                        src={dot2}
+                        alt={'dot'}
+                        onMouseUp={ e => props.handlePieceClick(e,props.rowIndex,props.index)}
+                    />
+            }
         </div>
     )
 }
